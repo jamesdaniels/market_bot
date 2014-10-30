@@ -166,9 +166,10 @@ module MarketBot
 
       def update
         resp = Typhoeus::Request.get(market_url, @request_opts)
-        result = App.parse(resp.body)
-        update_callback(result)
-
+        if resp.success?
+          result = App.parse(resp.body)
+          update_callback(result)
+        end
         self
       end
 
